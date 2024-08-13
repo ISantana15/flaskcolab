@@ -1,0 +1,22 @@
+!pip install flask_ngrok pandas
+from flask import Flask, jsonify
+from flask_ngrok import run_with_ngrok
+import pandas as pd
+
+app = Flask(__name__)
+run_with_ngrok(app)  # Inicializa o ngrok quando o app é iniciado
+
+data = {
+    "pessoas": [
+        {"numero": 1, "nome": "Ana", "idade": 30, "cidade": "São Paulo", "pais": "Brasil"},
+        {"numero": 2, "nome": "João", "idade": 25, "cidade": "Rio de Janeiro", "pais": "Brasil"},
+        {"numero": 3, "nome": "Carlos", "idade": 28, "cidade": "Lisboa", "pais": "Portugal"}
+    ]
+}
+
+@app.route('/index', methods=['GET'])
+def get_data():
+    return jsonify(data)
+
+if __name__ == '__main__':
+    app.run()
